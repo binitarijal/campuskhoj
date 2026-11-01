@@ -13,7 +13,7 @@ This is a deployment checklist, not a claim that a production host has been conf
 
 ## Backend host
 
-Deploy the existing `backend/` package with Node.js 20+ (Node 22.12+ is recommended for consistency). Use `npm install` and `npm start`. Configure the required backend environment names from `backend/.env.example` in the provider's secret/settings panel. Set `NODE_ENV=production`, a secure `SESSION_SECRET`, a production `MONGODB_URI`, and `FRONTEND_URL` to the exact HTTPS frontend origin(s). Do not upload `.env` to the host or Git.
+For Vercel, configure the project **Root Directory** as `backend/`. The `backend/api/index.js` entrypoint and `backend/vercel.json` rewrite expose the Express app's `/`, `/health`, and `/api/*` routes as a serverless function. Deploy the existing `backend/` package with Node.js 20+ (Node 22.12+ is recommended for consistency). Use `npm install` and `npm start` on hosts that run a long-lived Node process. Configure the required backend environment names from `backend/.env.example` in the provider's secret/settings panel. Set `NODE_ENV=production`, a secure `SESSION_SECRET`, a production `MONGODB_URI`, and `FRONTEND_URL` to the exact HTTPS frontend origin(s). Do not upload `.env` to the host or Git.
 
 Expose `/health` as a readiness check. The server can listen before MongoDB finishes connecting, so configure the deployment platform to treat the database readiness field as the application readiness signal if supported.
 
